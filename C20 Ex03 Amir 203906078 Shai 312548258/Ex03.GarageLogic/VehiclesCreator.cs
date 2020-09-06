@@ -8,5 +8,6 @@ namespace Ex03.GarageLogic
 {
     class VehiclesCreator
     {
+        Car car1 = new Car("Mazda 3","6312523",70);
     }
 }

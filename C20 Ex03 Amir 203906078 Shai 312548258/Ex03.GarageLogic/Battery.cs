@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Battery
+    class Battery:PowerSource
     {
         private float m_BatteryTimeLeft;
         private float m_MaxBatteryLife;
@@ -28,10 +28,6 @@ namespace Ex03.GarageLogic
             get
             {
                 return m_MaxBatteryLife;
-            }
-            set
-            {
-                m_MaxBatteryLife = value;
             }
         }
 
