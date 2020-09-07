@@ -41,6 +41,20 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public List<Wheel> Wheels
+        {
+            get
+            {
+                return m_Wheels;
+            }
+        }
+        public enum eVehicleType
+        {
+            Car = 1,
+            Motorcycle,
+            Truck
+           
+        }
         public abstract void AssignEnergySourceToVehicle();
 
     }

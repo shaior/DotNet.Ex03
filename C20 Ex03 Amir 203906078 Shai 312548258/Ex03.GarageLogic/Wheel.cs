@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public abstract class Wheel
+    public class Wheel
     {
         protected internal string m_Manufacturer;
         protected internal float m_CurrentTierPressure;

@@ -27,6 +27,28 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        public static void CreateNewVehicle()
+        {
+            Console.WriteLine("Please choose the type of the vehicle : 1.Car " + Environment.NewLine + "2.Motorcycle" + Environment.NewLine + "3.Truck");
+            string typeOfVehicle = Console.ReadLine();
+            if (typeOfVehicle >= 1 && typeOfVehicle <= 3)
+            {
+                //check if license number exists in garage
+                Console.WriteLine("Please enter 5 digits license plate number");
+                string licensePlateNumber = Console.ReadLine();
+
+
+                Console.WriteLine("Please enter license plate number");
+                string licensePlateNumber = Console.ReadLine();
+
+                Console.WriteLine("Please enter license plate number");
+                string licensePlateNumber = Console.ReadLine();
+            }
+
+            
+
+
+        }
         public static void Main()
         {
 
