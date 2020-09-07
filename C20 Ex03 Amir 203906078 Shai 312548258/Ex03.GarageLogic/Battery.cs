@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Battery:PowerSource
+    public class Battery:PowerSource
     {
         private float m_BatteryTimeLeft;
         private float m_MaxBatteryLife;

@@ -55,7 +55,7 @@ namespace Ex03.GarageLogic
             Truck
            
         }
-        public abstract void AssignEnergySourceToVehicle();
+        //public abstract void AssignEnergySourceToVehicle();
 
     }
 }

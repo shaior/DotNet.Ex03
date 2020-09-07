@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Car:Vehicle
+    public class Car:Vehicle
     {
         private eCarColor m_Color;
         private eNumberOfDoors m_DoorsNumber;
@@ -23,6 +23,29 @@ namespace Ex03.GarageLogic
             
         }
 
+        public eNumberOfDoors NumberOfDoors
+        {
+            get
+            {
+                return m_DoorsNumber;
+            }
+            set
+            {
+                m_DoorsNumber = value;
+            }
+        }
+
+        public eCarColor CarColor
+        {
+            get
+            {
+                return m_Color;
+            }
+            set
+            {
+                m_Color = value;
+            }
+        }
         public enum eCarColor
         {
             Grey = 1,
@@ -38,17 +61,17 @@ namespace Ex03.GarageLogic
             Five
         }
 
-        public override void AssignEnergySourceToVehicle()
-        {
-            if (PowerSource is Battery)
-            {
-                PowerSource.MaxPowerSourceAmount = K_MaxBatteryLifeTime;
-            }
-            else
-            {
-                ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Octan96;
-                PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.car;
-            }
-        }
+        //public override void AssignEnergySourceToVehicle()
+        //{
+        //    if (PowerSource is Battery)
+        //    {
+        //        PowerSource.MaxPowerSourceAmount = K_MaxBatteryLifeTime;
+        //    }
+        //    else
+        //    {
+        //        ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Octan96;
+        //        PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.car;
+        //    }
+        //}
     }
 }

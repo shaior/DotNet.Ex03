@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Motorcycle:Vehicle
+    public class Motorcycle:Vehicle
     {
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
-        
+
+        public Motorcycle(string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply,
+            PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
+            : base(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply)
+        {
+            
+        }
 
        
         public enum eLicenseType

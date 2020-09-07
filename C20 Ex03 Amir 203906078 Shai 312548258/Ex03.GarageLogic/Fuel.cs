@@ -62,13 +62,13 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public static void Refule(float i_AmountOfFuelToAdd , eFuelType i_FuelType)
-        {
-            if (i_FuelType == )
-            {
+        //public static void Refule(float i_AmountOfFuelToAdd , eFuelType i_FuelType)
+        //{
+        //    if (i_FuelType == )
+        //    {
                 
-            }
-        }
+        //    }
+        //}
         
     }
 }
