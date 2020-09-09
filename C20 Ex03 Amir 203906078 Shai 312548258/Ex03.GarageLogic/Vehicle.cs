@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Ex03.GarageLogic
         protected readonly PowerSource m_VehiclePowerSource;
         protected float m_EnergyPercentage;
         protected List<Wheel> m_Wheels;
+        public static readonly List<Vehicle> r_VehiclesList = new List<Vehicle>();
         
         
         public Vehicle(string i_ModelName, string i_LicenseNumber,float i_RemainingPowerSupply, PowerSource.ePowerSupply i_VehiclePowerSource)
@@ -22,6 +24,8 @@ namespace Ex03.GarageLogic
             this.r_LicenseNumber = i_LicenseNumber;
             this.m_EnergyPercentage = i_RemainingPowerSupply;
             this.m_Wheels = new List<Wheel>();
+
+            r_VehiclesList.Add(this);
 
             if (i_VehiclePowerSource == PowerSource.ePowerSupply.Battery)
             {
@@ -41,6 +45,21 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public List<Vehicle> VehiclesList
+        {
+            get
+            {
+                return r_VehiclesList;
+            }
+        }
+        public string LicenseNumber
+        {
+            get
+            {
+                return r_LicenseNumber;
+            }
+        }
+
         public List<Wheel> Wheels
         {
             get
@@ -55,7 +74,7 @@ namespace Ex03.GarageLogic
             Truck
            
         }
-        //public abstract void AssignEnergySourceToVehicle();
+        public abstract void AssignEnergySourceToVehicle();
 
     }
 }

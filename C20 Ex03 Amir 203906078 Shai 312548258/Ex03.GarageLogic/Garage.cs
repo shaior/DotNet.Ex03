@@ -10,8 +10,10 @@ namespace Ex03.GarageLogic
     {
         private string m_OwnerName;
         private string m_OwnerNumber;
-        private Dictionary<string, eCurrentVehicleState> m_CurrentGarageVehicles = new Dictionary<string, eCurrentVehicleState>();
+        protected readonly List<Vehicle> r_VehiclesList = new List<Vehicle>();
 
+        private Dictionary<string, eCurrentVehicleState> m_CurrentGarageVehicles = new Dictionary<string, eCurrentVehicleState>();
+        
         public Dictionary<string, eCurrentVehicleState> VehiclesState
         {
             get

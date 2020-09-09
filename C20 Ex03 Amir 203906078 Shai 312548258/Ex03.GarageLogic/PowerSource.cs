@@ -25,7 +25,16 @@ namespace Ex03.GarageLogic
 
             set
             {
-                m_CurrentPowerSourceAmount = value;
+                if (value + m_CurrentPowerSourceAmount > m_MaxPowerSourceAmount)
+                {
+                    throw new ValueOutOfRangeException(0,m_MaxPowerSourceAmount);
+                }
+                else
+                {
+                    m_CurrentPowerSourceAmount = value;
+                }
+
+               
             }
         }
 

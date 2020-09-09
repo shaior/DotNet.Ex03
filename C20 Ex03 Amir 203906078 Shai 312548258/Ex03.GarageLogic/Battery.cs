@@ -31,6 +31,24 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public static void Recharge(string i_LicenseNumber,float i_NumberOfMinutesToRecharge)
+        {
+            bool isVehicleFound = false;
+            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+            {
+                if (vehicle.LicenseNumber == i_LicenseNumber)
+                {
+                    (vehicle.PowerSource as Battery).BatteryTimeLeft += i_NumberOfMinutesToRecharge;
+                    isVehicleFound = true;
+                }
+
+            }
+
+            if (!isVehicleFound)
+            {
+                throw new ArgumentException();
+            }
+        }
 
     }
 }

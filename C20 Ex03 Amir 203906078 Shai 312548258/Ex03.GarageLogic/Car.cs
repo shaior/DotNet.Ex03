@@ -61,17 +61,19 @@ namespace Ex03.GarageLogic
             Five
         }
 
-        //public override void AssignEnergySourceToVehicle()
-        //{
-        //    if (PowerSource is Battery)
-        //    {
-        //        PowerSource.MaxPowerSourceAmount = K_MaxBatteryLifeTime;
-        //    }
-        //    else
-        //    {
-        //        ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Octan96;
-        //        PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.car;
-        //    }
-        //}
+        public override void AssignEnergySourceToVehicle()
+        {
+            if (PowerSource is Battery)
+            {
+                PowerSource.MaxPowerSourceAmount = K_MaxBatteryLifeTime;
+            }
+            else
+            {
+                ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Octan96;
+                PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.Car;
+            }
+        }
+
+        
     }
 }

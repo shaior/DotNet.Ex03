@@ -52,10 +52,14 @@ namespace Ex03.GarageLogic
 
         public void AddTierPressure(float i_TierPressureToAdd)
         {
-            if (i_TierPressureToAdd <= 0)
+            if (i_TierPressureToAdd <= 0 || m_CurrentTierPressure + i_TierPressureToAdd > r_MaxTierPressure)
             {
                 // MaxValue is the max air pressure - current air pressure
-                throw new ValueOutOfRangeException(MaxTierPressure - CurrentTierPressure,0);
+                throw new ValueOutOfRangeException(0, r_MaxTierPressure - m_CurrentTierPressure);
+            }
+            else
+            {
+                m_CurrentTierPressure += i_TierPressureToAdd;
             }
         }
 
