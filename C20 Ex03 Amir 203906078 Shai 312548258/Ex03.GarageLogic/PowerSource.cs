@@ -33,8 +33,6 @@ namespace Ex03.GarageLogic
                 {
                     m_CurrentPowerSourceAmount = value;
                 }
-
-               
             }
         }
 
@@ -51,6 +49,11 @@ namespace Ex03.GarageLogic
             }
         }
 
+        /// <summary>
+        /// gets the power supply type.
+        /// </summary>
+        /// <param name="i_PowerSupplyInput"></param>
+        /// <returns>power supply type.</returns>
         public static ePowerSupply getPowerSupplyType(string i_PowerSupplyInput)
         {
             ePowerSupply powerSupply = ePowerSupply.Fuel;

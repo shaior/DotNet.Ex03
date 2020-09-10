@@ -15,10 +15,8 @@ namespace Ex03.GarageLogic
         protected readonly PowerSource m_VehiclePowerSource;
         protected float m_EnergyPercentage;
         protected List<Wheel> m_Wheels;
-        
         public static readonly List<Vehicle> r_VehiclesList = new List<Vehicle>();
-        
-        
+
         public Vehicle(string i_ModelName, string i_LicenseNumber,float i_RemainingPowerSupply, PowerSource.ePowerSupply i_VehiclePowerSource)
         {
             this.r_Model = i_ModelName;
@@ -73,9 +71,13 @@ namespace Ex03.GarageLogic
             Car = 1,
             Motorcycle = 2,
             Truck = 3
-           
         }
 
+        /// <summary>
+        /// gets the vehicle type by the user input from the garage menu.
+        /// </summary>
+        /// <param name="i_VehicleTypePick"></param>
+        /// <returns> the vehicle type.</returns>
         public static eVehicleType GetVehicleTypeByDigit(int i_VehicleTypePick)
         {
             eVehicleType vehicleType = eVehicleType.Car;
@@ -95,28 +97,17 @@ namespace Ex03.GarageLogic
             return vehicleType;
         }
 
-        public abstract void AssignEnergySourceToVehicle();
-
-        // option 7 - Present all vehicle details to the client.
-        
-        
-           
-        
-
-     
-
         public override string ToString()
         {
             string allVehicleDetails;
-
             allVehicleDetails = string.Format(
             @"Vehicle license plate number: {0}
             Vehicle model name: {1}
             Wheels information: {2}
-            Power source energy left : {3}
-          "
+            Power source energy left : {3}"
             ,this.r_LicenseNumber, this.r_Model, this.m_Wheels.ToString(), this.PowerSource.CurrentPowerSourceAmount);
             return allVehicleDetails;
         }
+        public abstract void AssignEnergySourceToVehicle();
     }
 }

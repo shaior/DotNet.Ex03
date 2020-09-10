@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
     public class Battery:PowerSource
     {
         private float m_BatteryTimeLeft;
-        private float m_MaxBatteryLife;
+        private const float m_MaxBatteryLife = 2f;
 
         public float BatteryTimeLeft
         {
@@ -30,25 +30,5 @@ namespace Ex03.GarageLogic
                 return m_MaxBatteryLife;
             }
         }
-
-        public static void Recharge(string i_LicenseNumber,float i_NumberOfMinutesToRecharge)
-        {
-            bool isVehicleFound = false;
-            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
-            {
-                if (vehicle.LicenseNumber == i_LicenseNumber)
-                {
-                    (vehicle.PowerSource as Battery).BatteryTimeLeft += i_NumberOfMinutesToRecharge;
-                    isVehicleFound = true;
-                }
-
-            }
-
-            if (!isVehicleFound)
-            {
-                throw new ArgumentException();
-            }
-        }
-
     }
 }

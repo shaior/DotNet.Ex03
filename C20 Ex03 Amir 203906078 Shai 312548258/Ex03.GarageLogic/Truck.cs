@@ -15,7 +15,16 @@ namespace Ex03.GarageLogic
         public Truck(string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply, PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
             : base(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply)
         {
-            
+            for (int i = 0; i < k_NumberOfWheels; i++)
+            {
+                Wheels.Add(new Wheel(i_ManufacturerName, (float)Wheel.eMaxTierAirPressure.Truck));
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format(@"Truck carrying dangerous goods :{0}: Truck cargo volume is: {1}",
+                m_ContainsDangerousGoods.ToString(), m_CargoVolume.ToString());
         }
 
         public bool ContainsDangerousGoods
@@ -46,6 +55,5 @@ namespace Ex03.GarageLogic
             ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Soler;
             PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.Truck;
         }
-
     }
 }

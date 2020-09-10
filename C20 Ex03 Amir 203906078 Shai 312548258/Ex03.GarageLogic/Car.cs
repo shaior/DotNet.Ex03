@@ -12,7 +12,6 @@ namespace Ex03.GarageLogic
         private eNumberOfDoors m_DoorsNumber;
         private const float K_MaxBatteryLifeTime = 4.8f;
         private const int k_NumberOfWheels = 4;
-
         public Car(string i_ModelName, string i_LicenseNumber,float i_RemainingPowerSupply, PowerSource.ePowerSupply i_PowerSupply,string i_ManufacturerName) 
             :base(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply)
         {
@@ -20,7 +19,11 @@ namespace Ex03.GarageLogic
             {
                 Wheels.Add(new Wheel(i_ManufacturerName, (float)Wheel.eMaxTierAirPressure.Car));
             }
-            
+        }
+
+        public override string ToString()
+        {
+            return string.Format(@"Car's Color: {0} Car's doors number: {1}", m_Color.ToString(), m_DoorsNumber.ToString());
         }
 
         public eNumberOfDoors NumberOfDoors
@@ -72,17 +75,6 @@ namespace Ex03.GarageLogic
                 ((Fuel)PowerSource).FuelType = Fuel.eFuelType.Octan96;
                 PowerSource.MaxPowerSourceAmount = Fuel.FuelTankSize.Car;
             }
-        }
-
-        public override string ToString()
-        {
-            string carDetails;
-            carDetails = string.Format("{0} " 
-                                       
-                                       "");
-
-
-
         }
     }
 }

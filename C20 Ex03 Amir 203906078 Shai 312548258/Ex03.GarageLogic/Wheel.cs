@@ -12,15 +12,12 @@ namespace Ex03.GarageLogic
         protected internal string m_Manufacturer;
         protected internal float m_CurrentTierPressure;
         protected internal readonly float r_MaxTierPressure;
-
         public Wheel(string i_ManufacturerName, float i_MaxTierPressure)
         {
             this.m_CurrentTierPressure = i_MaxTierPressure;
             this.r_MaxTierPressure = i_MaxTierPressure;
             this.m_Manufacturer = i_ManufacturerName;
-        
         }
-
         public string Manufacturer
         {
             get
@@ -36,7 +33,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return base.ToString();
+            return string.Format(@"Tier Air pressure: {0} Manufacturer: {1}", m_CurrentTierPressure.ToString(), m_Manufacturer);
         }
 
         public float CurrentTierPressure
@@ -48,7 +45,6 @@ namespace Ex03.GarageLogic
             set
             {
                 m_CurrentTierPressure = value;
-
             }
         }
 
@@ -60,19 +56,18 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void AddTierPressure(float i_TierPressureToAdd)
-        {
-            if (i_TierPressureToAdd <= 0 || m_CurrentTierPressure + i_TierPressureToAdd > r_MaxTierPressure)
-            {
-                // MaxValue is the max air pressure - current air pressure
-                throw new ValueOutOfRangeException(0, r_MaxTierPressure - m_CurrentTierPressure);
-            }
-            else
-            {
-                m_CurrentTierPressure += i_TierPressureToAdd;
-            }
-        }
-
+        //public void AddTierPressure(float i_TierPressureToAdd)
+        //{
+        //    if (i_TierPressureToAdd <= 0 || m_CurrentTierPressure + i_TierPressureToAdd > r_MaxTierPressure)
+        //    {
+        //        // MaxValue is the max air pressure - current air pressure
+        //        throw new ValueOutOfRangeException(0, r_MaxTierPressure - m_CurrentTierPressure);
+        //    }
+        //    else
+        //    {
+        //        m_CurrentTierPressure += i_TierPressureToAdd;
+        //    }
+        //}
 
         public enum eMaxTierAirPressure
         {

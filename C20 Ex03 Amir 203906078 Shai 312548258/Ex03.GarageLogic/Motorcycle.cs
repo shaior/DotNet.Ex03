@@ -15,12 +15,14 @@ namespace Ex03.GarageLogic
         private const float k_MinEngineVolume = 1f;
         private const float k_MaxEngineVolume = 2000f;
 
-
         public Motorcycle(string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply,
             PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
             : base(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply)
         {
-            
+            for (int i = 0; i < k_NumberOfWheels; i++)
+            {
+                Wheels.Add(new Wheel(i_ManufacturerName, (float)Wheel.eMaxTierAirPressure.Motorcycle));
+            }
         }
 
         public int EngineVolume
@@ -54,8 +56,9 @@ namespace Ex03.GarageLogic
             }
         }
 
-      
-
+        /// <summary>
+        /// assiging energy power source to motorscycle.
+        /// </summary>
         public override void AssignEnergySourceToVehicle()
         {
             if (PowerSource is Battery)
@@ -75,6 +78,11 @@ namespace Ex03.GarageLogic
             B1,
             A1,
             A
+        }
+
+        public override string ToString()
+        {
+            return string.Format(@"Motorcycle's license type: {0} Motorcycle's engine volume: {1}", m_LicenseType.ToString(), m_EngineVolume.ToString());
         }
     }
 }

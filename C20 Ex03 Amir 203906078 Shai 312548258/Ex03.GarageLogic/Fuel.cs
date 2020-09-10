@@ -45,23 +45,22 @@ namespace Ex03.GarageLogic
             set { m_FuelType = value; }
         }
 
-        public static void Refule(string i_LicenseNumber, eFuelType i_FuelType, float i_AmountToRefule)
-        {
-            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
-            {
-                if (vehicle.LicenseNumber == i_LicenseNumber)
-                {
-                    if ((vehicle.PowerSource as Fuel).FuelType == i_FuelType)
-                    {
-                        vehicle.PowerSource.CurrentPowerSourceAmount += i_AmountToRefule;
-                    }
-                    else
-                    {
-                        throw new ArgumentException();
-                    }
-                }
-
-            }
-        }
+        //public static void Refule(string i_LicenseNumber, eFuelType i_FuelType, float i_AmountToRefule)
+        //{
+        //    foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+        //    {
+        //        if (vehicle.LicenseNumber == i_LicenseNumber)
+        //        {
+        //            if ((vehicle.PowerSource as Fuel).FuelType == i_FuelType)
+        //            {
+        //                vehicle.PowerSource.CurrentPowerSourceAmount += i_AmountToRefule;
+        //            }
+        //            else
+        //            {
+        //                throw new ArgumentException();
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
