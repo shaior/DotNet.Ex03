@@ -11,22 +11,22 @@ namespace Ex03.GarageLogic
         private static Vehicle m_Vehicle = null;
         //Car car1 = new Car("Mazda 3","6312523",70, PowerSource.ePowerSupply.Fuel,"michelin");
 
-        public static Vehicle CreateVehicle(Vehicle.eVehicleType i_VehicleType, string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply, PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
+        public static Vehicle CreateVehicle(Vehicle.eVehicleType i_VehicleType, string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply, PowerSource.ePowerSupply i_PowerSupply, string i_TiresManufacturerName)
         {
             
             switch (i_VehicleType)
             {
-                //for car creation
-                case Vehicle.eVehicleType.Car:
-                    m_Vehicle = CreateCar(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_ManufacturerName);
-                    break;
-                    
                 
-                //case Vehicle.eVehicleType.Motorcycle:
-                    
-
-                //case Vehicle.eVehicleType.Truck:
-
+                case Vehicle.eVehicleType.Car:
+                    m_Vehicle = CreateCar(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_TiresManufacturerName);
+                    break;
+                case Vehicle.eVehicleType.Motorcycle:
+                    m_Vehicle = CreateMotorcycle(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_TiresManufacturerName);
+                    break;
+                case Vehicle.eVehicleType.Truck:
+                    m_Vehicle = CreateTruck(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply,
+                        i_TiresManufacturerName);
+                    break;
                 
             }
 
@@ -42,12 +42,26 @@ namespace Ex03.GarageLogic
 
             return car;
         }
-
-        public static bool CheckIfVehicleExistsInGarage(Vehicle i_Vehicle)
+        public static Vehicle CreateMotorcycle(string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply,
+            PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
         {
-            //logic
-            return true;
+
+            Motorcycle motorcycle = new Motorcycle(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_ManufacturerName);
+
+
+            return motorcycle;
         }
+        public static Vehicle CreateTruck(string i_ModelName, string i_LicenseNumber, float i_RemainingPowerSupply,
+            PowerSource.ePowerSupply i_PowerSupply, string i_ManufacturerName)
+        {
+
+            Truck truck = new Truck(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_ManufacturerName);
+
+
+            return truck;
+        }
+
+
     }
 
 }

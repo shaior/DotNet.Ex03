@@ -70,10 +70,30 @@ namespace Ex03.GarageLogic
         public enum eVehicleType
         {
             Car = 1,
-            Motorcycle,
-            Truck
+            Motorcycle = 2,
+            Truck = 3
            
         }
+
+        public static eVehicleType GetVehicleTypeByDigit(int i_VehicleTypePick)
+        {
+            eVehicleType vehicleType = eVehicleType.Car;
+            if (i_VehicleTypePick == 1)
+            {
+                vehicleType = eVehicleType.Car;
+            }
+            else if (i_VehicleTypePick == 2)
+            {
+                vehicleType = eVehicleType.Motorcycle;
+            }
+            else if(i_VehicleTypePick == 3)
+            {
+                vehicleType = eVehicleType.Truck;
+            }
+
+            return vehicleType;
+        }
+
         public abstract void AssignEnergySourceToVehicle();
 
     }

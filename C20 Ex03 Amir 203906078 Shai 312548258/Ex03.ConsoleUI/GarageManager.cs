@@ -21,46 +21,88 @@ namespace Ex03.ConsoleUI
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("hi");
+                    Console.WriteLine("Please sign Vehicle for Treatment in the garage.");
+
                     break;
                     
 
             }
         }
 
-        public static void CreateNewVehicle()
+        public static void SignVehicleForTreatment()
         {
-            string typeOfVehicle = string.Empty;
+
+        }
+
+        public static void CreateNewVehicle()  //SECTION 1
+        {
+            string typeOfVehicleInput = string.Empty;
             try
             {
-                Console.WriteLine("Please choose the type of the vehicle : 1.Car " + Environment.NewLine +
+                Console.WriteLine("Please choose the type of the vehicle :" + Environment.NewLine+" 1.Car " + Environment.NewLine +
                                   "2.Motorcycle" + Environment.NewLine + "3.Truck");
-                typeOfVehicle = Console.ReadLine();
-                if (int.Parse(typeOfVehicle) >= 1 && int.Parse(typeOfVehicle) <= 3)
+                typeOfVehicleInput = Console.ReadLine();
+                if (int.Parse(typeOfVehicleInput) >= 1 && int.Parse(typeOfVehicleInput) <= 3)
                 {
                     bool checkPlateNumber = true;
                     while (checkPlateNumber)
                     {
+
                         //check if license number exists in garage
-                        Console.WriteLine("Please enter 5 digits license plate number");
-                        string licensePlateNumber = Console.ReadLine();
-                        checkPlateNumber = UserInputValidation.LicensePlateValidation(licensePlateNumber);
-                        if (!checkPlateNumber)
+                        Console.WriteLine("Please enter license plate number");
+                        string licensePlateNumberInput = Console.ReadLine();
+
+                        checkPlateNumber = GarageLogic.Garage.CheckIfVehicleExistsInGarage(licensePlateNumberInput);
+                        //checkPlateNumber = UserInputValidation.LicensePlateValidation(licensePlateNumber);
+                        if (checkPlateNumber)
                         {
-                            continue;
-                            
+                            Console.WriteLine("This Vehicle already exists in the garage. starting treatment...");
+                            GarageLogic.Garage.VehiclesState.Add(licensePlateNumberInput,Garage.eCurrentVehicleState.CurrentlyRepairing);
+                        }
+                        else
+                        {
+                            GarageLogic.Garage.VehiclesState.Add(licensePlateNumberInput,
+                                Garage.eCurrentVehicleState.CurrentlyRepairing); /// TODO: NEED TO CHECK THIS LINE IF NECCESARY
+                            Vehicle.eVehicleType vehicleTypePick =
+                                Vehicle.GetVehicleTypeByDigit(int.Parse(typeOfVehicleInput));
+                            string vehicleModelName = string.Format("Pleae enter your {0} Model: ",vehicleTypePick);
+                            Console.WriteLine(vehicleModelName); 
+                            string modelNameInput = Console.ReadLine();
+                            //////////////////////////////////////////////
+                            string vehiclePowerSupply = string.Format("Please enter your {0}'s Power Supply. 1.Fuel 2.Battery :  ",vehicleTypePick);
+                            Console.WriteLine(vehiclePowerSupply);
+                            string vehiclePowerSupplyInput = Console.ReadLine();
+                            PowerSource.ePowerSupply powerSupply = PowerSource.getPowerSupplyType(vehiclePowerSupplyInput);
+                            //////////////////////////////////////////////////
+                            string powerSupplyRemaining = string.Empty;
+                            if (powerSupply == PowerSource.ePowerSupply.Fuel)
+                            {
+                                 powerSupplyRemaining = string.Format("Please enter remaining fuel in your {0} by liters: ", vehicleTypePick);
+                            }
+                            else if(powerSupply == PowerSource.ePowerSupply.Battery)
+                            {
+                                 powerSupplyRemaining = string.Format("Please enter remaining Battery time in your {0} by hours: ", vehicleTypePick);
+                            }
+
+                            Console.WriteLine(powerSupplyRemaining);
+                            string powerSupplyRemainingInput = Console.ReadLine();
+                            /////////////////////////////////////////////////
+                            string manufacturerName = string.Format("Please enter your {0}'s tires Manufactuer Name: ", vehicleTypePick);
+                            Console.WriteLine(manufacturerName);
+                            string manufacturerNameInput = Console.ReadLine();
+                            /////////////////////////////////////////////////////
+                            Vehicle createdVehicle = GarageLogic.VehiclesCreator.CreateVehicle(vehicleTypePick, modelNameInput,
+                                licensePlateNumberInput, float.Parse(powerSupplyRemainingInput), powerSupply,
+                                manufacturerNameInput);
+                            AddVehicleDetails(createdVehicle);
+
+                            Console.WriteLine();
                         }
                     }
 
 
-                    Console.WriteLine("Please enter license plate number");
-                    //string licensePlateNumber = Console.ReadLine();
-
-                    Console.WriteLine("Please enter license plate number");
-                    //string licensePlateNumber = Console.ReadLine();
                 }
             }
-
             catch (Exception ex)
             {
                 string exceptionType = string.Format("input is not valid - {0}", ex.Message);
@@ -68,8 +110,8 @@ namespace Ex03.ConsoleUI
             }
 
         }
-
-        public void AddVehicleDetails(Vehicle i_Vehicle)
+        
+        public static void AddVehicleDetails(Vehicle i_Vehicle)
         {
            
 
@@ -96,7 +138,7 @@ namespace Ex03.ConsoleUI
                 {
                     GetBatteryTimeLeft(i_Vehicle);
                     GetMaxBatteryLifeTime(i_Vehicle);
-                    ChargeBattery(i_Vehicle);
+                    //ChargeBattery(i_Vehicle);  no need to use here - section 6
                 }
                 else if (i_Vehicle.PowerSource is Fuel)
                 {
@@ -110,7 +152,18 @@ namespace Ex03.ConsoleUI
             //AddAirPressureToWheels
         }
 
-        public void AddCarColor(Vehicle i_Vehicle)
+        public static void GetAllGarageVehiclesLicenseNumber()  //SECTION 2
+        {
+
+            // TODO : need to write new writline method for dictionary print
+            // todo: need to filter by current vehicle state (different method)
+            foreach (Dictionary<string,Garage.eCurrentVehicleState> vehicle in Garage.VehiclesState)
+            {
+                Console.WriteLine("{0}  :  {1}",Garage.VehiclesState.Keys , Garage.VehiclesState.Values);
+            }
+        }
+
+        public static void AddCarColor(Vehicle i_Vehicle)
         {
             
             Console.WriteLine("Choose car Color: 1.Grey 2.White 3.Green 4.Red");
@@ -142,7 +195,7 @@ namespace Ex03.ConsoleUI
 
         }
 
-        public void AddCarDoors(Vehicle i_Vehicle)
+        public static void AddCarDoors(Vehicle i_Vehicle)
         {
             Console.WriteLine("Choose Number of doors: 1.Two Doors 2.Three Doors 3.Four Doors 4.Five Doors");
             string userDoorNumberChoice = Console.ReadLine();
@@ -172,7 +225,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public void AddMotorcycleEngineVolume(Vehicle i_Vehicle)
+        public static void AddMotorcycleEngineVolume(Vehicle i_Vehicle)
         {
             
             int engineVolume;
@@ -190,7 +243,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public void AddMotorcycleLicenseType(Vehicle i_Vehicle)
+        public static void AddMotorcycleLicenseType(Vehicle i_Vehicle)
         {
             Console.WriteLine("Choose License Type: 1.B2 2.B1 3.A1 4.A");
             string userLicenceTypeInput = Console.ReadLine();
@@ -220,7 +273,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public void IsCarryingDangerousGoods(Vehicle i_Vehicle)
+        public static void IsCarryingDangerousGoods(Vehicle i_Vehicle)
         {
             bool isCarryingDG;
             Console.WriteLine("Does the Truck Transport Dangerous Goods? 1.Yes 2.No");
@@ -246,7 +299,7 @@ namespace Ex03.ConsoleUI
 
         }
 
-        public void AddCargoVolume(Vehicle i_Vehicle)
+        public static void AddCargoVolume(Vehicle i_Vehicle)
         {
             float cargoVolume;
             Console.WriteLine("Choose Cargo Volume: ");
@@ -264,17 +317,17 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public float GetBatteryTimeLeft(Vehicle i_Vehicle)
+        public static float GetBatteryTimeLeft(Vehicle i_Vehicle)
         {
             return i_Vehicle.PowerSource.CurrentPowerSourceAmount;
         }
 
-        public float GetMaxBatteryLifeTime(Vehicle i_Vehicle)
+        public static float GetMaxBatteryLifeTime(Vehicle i_Vehicle)
         {
             return i_Vehicle.PowerSource.MaxPowerSourceAmount;
         }
 
-        public void ChargeBattery(Vehicle i_Vehicle)
+        public static void ChargeBattery(Vehicle i_Vehicle)
         {
             Console.WriteLine("How many hours do you like to add to the battery? ");
             string hoursToBatteryInput = Console.ReadLine();
@@ -290,22 +343,22 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public Fuel.eFuelType GetFuelType(Vehicle i_Vehicle)
+        public static Fuel.eFuelType GetFuelType(Vehicle i_Vehicle)
         {
             return (i_Vehicle.PowerSource as Fuel).FuelType;
         }
 
-        public float GetAmountOfFuelRemaining(Vehicle i_Vehicle)
+        public static float GetAmountOfFuelRemaining(Vehicle i_Vehicle)
         {
             return (i_Vehicle.PowerSource as Fuel).CurrentFuelAmount;
         }
 
-        public float GetMaxFuelTankCapacity(Vehicle i_Vehicle)
+        public static float GetMaxFuelTankCapacity(Vehicle i_Vehicle)
         {
             return (i_Vehicle.PowerSource as Fuel).MaxFuelAmount;
         }
 
-        public void RefuleGasTank(Vehicle i_Vehicle , float i_FuelAmount , Fuel.eFuelType i_FuelType)
+        public static void RefuleGasTank(Vehicle i_Vehicle , float i_FuelAmount , Fuel.eFuelType i_FuelType)
         {
             Fuel fuelPoweredVehicle = (i_Vehicle.PowerSource as Fuel);
             if (i_FuelType == fuelPoweredVehicle.FuelType)
@@ -323,15 +376,9 @@ namespace Ex03.ConsoleUI
 
         public static void Main()
         {
-            Vehicle v,c;
-            v = GarageLogic.VehiclesCreator.CreateVehicle(Vehicle.eVehicleType.Car, "Mazda",
-                "34545", 50, PowerSource.ePowerSupply.Fuel, "goodyear");
-           
-           
-            c = GarageLogic.VehiclesCreator.CreateVehicle(Vehicle.eVehicleType.Car, "Toyota",
-                "33333", 60, PowerSource.ePowerSupply.Battery, "goodyear");
+            CreateNewVehicle();
 
-            Console.WriteLine(v);
+            Console.WriteLine();
         }
     }
 }

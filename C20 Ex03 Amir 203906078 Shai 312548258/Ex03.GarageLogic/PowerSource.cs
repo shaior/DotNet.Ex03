@@ -12,8 +12,8 @@ namespace Ex03.GarageLogic
         private float m_MaxPowerSourceAmount;
         public enum ePowerSupply
         {
-            Fuel = 0,
-            Battery = 1
+            Fuel = 1,
+            Battery = 2
         }
 
         public float CurrentPowerSourceAmount
@@ -51,5 +51,19 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public static ePowerSupply getPowerSupplyType(string i_PowerSupplyInput)
+        {
+            ePowerSupply powerSupply = ePowerSupply.Fuel;
+            if (int.Parse(i_PowerSupplyInput) == 1)
+            {
+                powerSupply = ePowerSupply.Fuel;
+            }
+            else
+            {
+                powerSupply = ePowerSupply.Battery;
+            }
+
+            return powerSupply;
+        }
     }
 }
