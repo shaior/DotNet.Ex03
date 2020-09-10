@@ -19,27 +19,18 @@ namespace Ex03.ConsoleUI
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Please sign Vehicle for Treatment in the garage.");
+                    CreateNewVehicle();
                     break;
+                case "2":
+                    showAllGarageVehiclesLicenseNumber();
+                    break;
+                case "4":
+                    FillWheelToMaxByLicenseNumber();
+                    break;
+                    
+
                 case "7":
-                    Console.WriteLine("Please enter Vehicle license number to get all details:");
-                    string vehicleLicenseNumber = Console.ReadLine();
-                    string allVehicleDetails = string.Empty;
-
-                    if (Garage.CheckIfVehicleExistsInGarage(vehicleLicenseNumber))
-                    {
-                        foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
-                        {
-                            if (vehicle.LicenseNumber == vehicleLicenseNumber)
-                            {
-                                allVehicleDetails = Vehicle.GetAllVehicleDetails(vehicle);
-                                break;
-                            }
-                        }
-                        
-                        Console.WriteLine(allVehicleDetails);
-                    }
-
+                    ShowFullVehicleDetailsByLicenseNumber();
                     break;
             }
         }
@@ -72,12 +63,11 @@ namespace Ex03.ConsoleUI
                         if (checkPlateNumber)
                         {
                             Console.WriteLine("This Vehicle already exists in the garage. starting treatment...");
-                            GarageLogic.Garage.VehiclesState.Add(licensePlateNumberInput,Garage.eCurrentVehicleState.CurrentlyRepairing);
+                            //GarageLogic.GarageInfo.VehiclesState.Add(licensePlateNumberInput,new );
                         }
                         else
                         {
-                            GarageLogic.Garage.VehiclesState.Add(licensePlateNumberInput,
-                                Garage.eCurrentVehicleState.CurrentlyRepairing); /// TODO: NEED TO CHECK THIS LINE IF NECCESARY
+                      
                             Vehicle.eVehicleType vehicleTypePick =
                                 Vehicle.GetVehicleTypeByDigit(int.Parse(typeOfVehicleInput));
                             string vehicleModelName = string.Format("Pleae enter your {0} Model: ",vehicleTypePick);
@@ -110,6 +100,7 @@ namespace Ex03.ConsoleUI
                                 licensePlateNumberInput, float.Parse(powerSupplyRemainingInput), powerSupply,
                                 manufacturerNameInput);
                             AddVehicleDetails(createdVehicle);
+                            AddVehicleToTreatment(createdVehicle);
 
                             Console.WriteLine();
                         }
@@ -125,7 +116,54 @@ namespace Ex03.ConsoleUI
             }
 
         }
-        
+
+        public static void showAllGarageVehiclesLicenseNumber()
+        {
+            Console.WriteLine("Choose Vehicle state to filter: 1.Currently Repairing 2.Repaired 3.Paid Up");
+            string choice = Console.ReadLine();
+            
+            
+            GarageInfo.eCurrentVehicleState state = (GarageInfo.eCurrentVehicleState)int.Parse(choice);  
+            foreach (GarageInfo info in GarageInfo.CurrentGarageVehicles.Values)
+            {
+                if (info.VehicleState == state)
+                {
+                    Console.WriteLine(string.Format("{0} : {1}",info.Vehicle.LicenseNumber,state));
+                }
+            }
+        }
+
+        public static void ShowFullVehicleDetailsByLicenseNumber()
+        {
+            Console.WriteLine("Please enter Vehicle license number to get all details:");
+            string vehicleLicenseNumber = Console.ReadLine();
+            string allVehicleDetails = string.Empty;
+
+            if (Garage.CheckIfVehicleExistsInGarage(vehicleLicenseNumber))
+            {
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == vehicleLicenseNumber)
+                    {
+                        allVehicleDetails = vehicle.ToString();
+                        break;
+                    }
+                }
+
+                Console.WriteLine(allVehicleDetails);
+            }
+        }
+
+        public static void AddVehicleToTreatment(Vehicle i_Vehicle)
+        {
+            Console.WriteLine("Please add owner name: ");
+            string ownerName = Console.ReadLine();
+            Console.WriteLine("Please add owner phone number: ");
+            string ownerNumber = Console.ReadLine();
+            GarageInfo vehicleToTreatment = new GarageInfo(i_Vehicle, ownerName, ownerNumber);
+            vehicleToTreatment.InsertVehicleToGarageForTreatment(i_Vehicle.LicenseNumber);
+        }
+
         public static void AddVehicleDetails(Vehicle i_Vehicle)
         {
            
@@ -165,17 +203,6 @@ namespace Ex03.ConsoleUI
             }
 
             //AddAirPressureToWheels
-        }
-
-        public static void GetAllGarageVehiclesLicenseNumber()  //SECTION 2
-        {
-
-            // TODO : need to write new writline method for dictionary print
-            // todo: need to filter by current vehicle state (different method)
-            //foreach (Dictionary<string,Garage.eCurrentVehicleState> vehicle in Garage.VehiclesState)
-            //{
-            //    Console.WriteLine("{0}  :  {1}",Garage.VehiclesState.Keys , Garage.VehiclesState.Values);
-            //}
         }
 
         public static void AddCarColor(Vehicle i_Vehicle)
@@ -373,10 +400,19 @@ namespace Ex03.ConsoleUI
             return (i_Vehicle.PowerSource as Fuel).MaxFuelAmount;
         }
 
-        public static void RefuleGasTank(Vehicle i_Vehicle , float i_FuelAmount , Fuel.eFuelType i_FuelType)
+        public static void RefuleGasTank( float i_FuelAmount , Fuel.eFuelType i_FuelType)
         {
-            Fuel fuelPoweredVehicle = (i_Vehicle.PowerSource as Fuel);
-            if (i_FuelType == fuelPoweredVehicle.FuelType)
+            Console.WriteLine("Please Provide License number to Refule car: ");
+            string licenseNumber = Console.ReadLine();
+            Console.WriteLine("Please Provide Fuel amount to refule: ");
+            string fuleAmount = Console.ReadLine();
+            Console.WriteLine(string.Format("Please provide fuel type: 1.Octan98 2.Octan96 3.Octan95 4.Soler"));
+            string fuelType = Console.ReadLine();
+
+            Fuel.eFuelType type = (Fuel.eFuelType)int.Parse(fuelType);
+
+            
+            if (type == fuelPoweredVehicle.FuelType)
             {
                 if (fuelPoweredVehicle.CurrentFuelAmount + i_FuelAmount <= fuelPoweredVehicle.MaxFuelAmount)
                 {
@@ -389,6 +425,34 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        // option 4 - fill all wheels to max by license number.
+        public static void FillWheelToMaxByLicenseNumber()
+        {
+            
+            try
+            {
+                Console.WriteLine("Please Provide License number to inflate wheels to maximum: ");
+                string licenseNumber = Console.ReadLine();
+
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == i_LicenseNumber)
+                    {
+                        foreach (Wheel wheel in vehicle.Wheels)
+                        {
+                            wheel.CurrentTierPressure = wheel.MaxTierPressure;
+                           
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+                throw new ArgumentException();
+            }
+          
+        }
         public static void Main()
         {
             CreateNewVehicle();

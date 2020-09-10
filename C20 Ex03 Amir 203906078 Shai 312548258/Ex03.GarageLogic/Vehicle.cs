@@ -15,6 +15,7 @@ namespace Ex03.GarageLogic
         protected readonly PowerSource m_VehiclePowerSource;
         protected float m_EnergyPercentage;
         protected List<Wheel> m_Wheels;
+        
         public static readonly List<Vehicle> r_VehiclesList = new List<Vehicle>();
         
         
@@ -24,7 +25,7 @@ namespace Ex03.GarageLogic
             this.r_LicenseNumber = i_LicenseNumber;
             this.m_EnergyPercentage = i_RemainingPowerSupply;
             this.m_Wheels = new List<Wheel>();
-
+            
             r_VehiclesList.Add(this);
 
             if (i_VehiclePowerSource == PowerSource.ePowerSupply.Battery)
@@ -102,20 +103,7 @@ namespace Ex03.GarageLogic
            
         
 
-        // option 4 - fill all wheels to max by license number.
-        public void FillWheelToMaxByLicenseNumber(string i_LicenseNumber)
-        {
-            foreach (Vehicle vehicle in r_VehiclesList)
-            {
-                if (vehicle.LicenseNumber == i_LicenseNumber)
-                {
-                    foreach (Wheel wheel in vehicle.Wheels)
-                    {
-                        wheel.CurrentTierPressure = wheel.MaxTierPressure;
-                    }
-                }
-            }
-        }
+     
 
         public override string ToString()
         {
@@ -126,9 +114,8 @@ namespace Ex03.GarageLogic
             Vehicle model name: {1}
             Wheels information: {2}
             Power source energy left : {3}
-            Owner name: {4}
-            Garage status: {5}"
-            ,this.r_LicenseNumber, this.r_Model, this.m_Wheels.ToString(), this.PowerSource.CurrentPowerSourceAmount, this.OwnerName);
+          "
+            ,this.r_LicenseNumber, this.r_Model, this.m_Wheels.ToString(), this.PowerSource.CurrentPowerSourceAmount);
             return allVehicleDetails;
         }
     }
