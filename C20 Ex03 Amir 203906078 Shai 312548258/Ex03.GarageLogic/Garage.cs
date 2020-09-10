@@ -8,9 +8,21 @@ namespace Ex03.GarageLogic
 {
     public class Garage
     {
+        private Vehicle m_Vehicle;
+        private string m_OwnerPhoneNumber;
         private string m_OwnerName;
-        private string m_OwnerNumber;
-        
+
+        public Garage(Vehicle i_newVehicle, string i_OwnerPhoneNumber, string i_OwnerName)
+        {
+            this.m_Vehicle = i_newVehicle;
+            this.m_OwnerName = i_OwnerName;
+            this.m_OwnerPhoneNumber = i_OwnerPhoneNumber;
+        }
+
+        public void InsertVehicleToGarage(Garage i)
+        {
+            List<Garage> m_GarageInfo
+        }
 
         private static Dictionary<string, eCurrentVehicleState> m_CurrentGarageVehicles = new Dictionary<string, eCurrentVehicleState>();
         
@@ -43,6 +55,8 @@ namespace Ex03.GarageLogic
         //methd changeVehicleState
         //addvehicletoTreatment
         //checkIfVehicleExist
+
+
 
         public enum eCurrentVehicleState
         {

@@ -43,12 +43,12 @@
     <Compile Include="Car.cs" />
     <Compile Include="Fuel.cs" />
     <Compile Include="Garage.cs" />
+    <Compile Include="GarageTreatment.cs" />
     <Compile Include="Motorcycle.cs" />
     <Compile Include="PowerSource.cs" />
     <Compile Include="Truck.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicle.cs" />
-    <Compile Include="VehicleOwner.cs" />
     <Compile Include="VehiclesCreator.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>

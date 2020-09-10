@@ -34,11 +34,21 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
         public float CurrentTierPressure
         {
             get
             {
                 return m_CurrentTierPressure;
+            }
+            set
+            {
+                m_CurrentTierPressure = value;
+
             }
         }
 

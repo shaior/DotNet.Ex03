@@ -16,7 +16,6 @@ namespace Ex03.GarageLogic
             
             switch (i_VehicleType)
             {
-                
                 case Vehicle.eVehicleType.Car:
                     m_Vehicle = CreateCar(i_ModelName, i_LicenseNumber, i_RemainingPowerSupply, i_PowerSupply, i_TiresManufacturerName);
                     break;

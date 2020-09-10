@@ -16,16 +16,31 @@ namespace Ex03.ConsoleUI
             string choice;
             Console.WriteLine("Welcome To A&S Garage Manager! Type (1-7) to select from Below: ");
             choice = Console.ReadLine();
-            
-
             switch (choice)
             {
                 case "1":
                     Console.WriteLine("Please sign Vehicle for Treatment in the garage.");
+                    break;
+                case "7":
+                    Console.WriteLine("Please enter Vehicle license number to get all details:");
+                    string vehicleLicenseNumber = Console.ReadLine();
+                    string allVehicleDetails = string.Empty;
+
+                    if (Garage.CheckIfVehicleExistsInGarage(vehicleLicenseNumber))
+                    {
+                        foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                        {
+                            if (vehicle.LicenseNumber == vehicleLicenseNumber)
+                            {
+                                allVehicleDetails = Vehicle.GetAllVehicleDetails(vehicle);
+                                break;
+                            }
+                        }
+                        
+                        Console.WriteLine(allVehicleDetails);
+                    }
 
                     break;
-                    
-
             }
         }
 
@@ -157,10 +172,10 @@ namespace Ex03.ConsoleUI
 
             // TODO : need to write new writline method for dictionary print
             // todo: need to filter by current vehicle state (different method)
-            foreach (Dictionary<string,Garage.eCurrentVehicleState> vehicle in Garage.VehiclesState)
-            {
-                Console.WriteLine("{0}  :  {1}",Garage.VehiclesState.Keys , Garage.VehiclesState.Values);
-            }
+            //foreach (Dictionary<string,Garage.eCurrentVehicleState> vehicle in Garage.VehiclesState)
+            //{
+            //    Console.WriteLine("{0}  :  {1}",Garage.VehiclesState.Keys , Garage.VehiclesState.Values);
+            //}
         }
 
         public static void AddCarColor(Vehicle i_Vehicle)

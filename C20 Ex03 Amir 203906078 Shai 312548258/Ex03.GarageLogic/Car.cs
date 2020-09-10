@@ -74,6 +74,15 @@ namespace Ex03.GarageLogic
             }
         }
 
-        
+        public override string ToString()
+        {
+            string carDetails;
+            carDetails = string.Format("{0} " 
+                                       
+                                       "");
+
+
+
+        }
     }
 }
