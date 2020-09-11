@@ -82,7 +82,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(@"Motorcycle's license type: {0} Motorcycle's engine volume: {1}", m_LicenseType.ToString(), m_EngineVolume.ToString());
+            return string.Format(@"{0} Motorcycle's license type: {1} Motorcycle's engine volume: {2}",(this as Vehicle).GetVehicleDeatils(), m_LicenseType.ToString(), m_EngineVolume.ToString());
         }
     }
 }

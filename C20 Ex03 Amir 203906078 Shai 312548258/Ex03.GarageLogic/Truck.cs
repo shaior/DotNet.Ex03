@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(@"Truck carrying dangerous goods :{0}: Truck cargo volume is: {1}",
+            return string.Format(@"{0}, Truck carrying dangerous goods :{1}: Truck cargo volume is: {2}", (this as Vehicle).GetVehicleDeatils(),
                 m_ContainsDangerousGoods.ToString(), m_CargoVolume.ToString());
         }
 

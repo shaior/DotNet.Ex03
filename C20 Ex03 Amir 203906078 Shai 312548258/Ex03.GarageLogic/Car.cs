@@ -23,7 +23,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(@"Car's Color: {0} Car's doors number: {1}", m_Color.ToString(), m_DoorsNumber.ToString());
+            
+            return string.Format(@"{0},Car's Color: {1}, Car's doors number: {2}, ",(this as Vehicle).GetVehicleDeatils(), m_Color.ToString(), m_DoorsNumber.ToString());
         }
 
         public eNumberOfDoors NumberOfDoors
@@ -64,6 +65,9 @@ namespace Ex03.GarageLogic
             Five
         }
 
+        /// <summary>
+        /// this method assign the vehicle energy source
+        /// </summary>
         public override void AssignEnergySourceToVehicle()
         {
             if (PowerSource is Battery)

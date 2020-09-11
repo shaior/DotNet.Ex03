@@ -56,18 +56,27 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //public void AddTierPressure(float i_TierPressureToAdd)
-        //{
-        //    if (i_TierPressureToAdd <= 0 || m_CurrentTierPressure + i_TierPressureToAdd > r_MaxTierPressure)
-        //    {
-        //        // MaxValue is the max air pressure - current air pressure
-        //        throw new ValueOutOfRangeException(0, r_MaxTierPressure - m_CurrentTierPressure);
-        //    }
-        //    else
-        //    {
-        //        m_CurrentTierPressure += i_TierPressureToAdd;
-        //    }
-        //}
+        public static void InflateWheelsToMax(string i_LicenseNumber)
+        {
+            try
+            {
+
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == i_LicenseNumber)
+                    {
+                        foreach (Wheel wheel in vehicle.Wheels)
+                        {
+                            wheel.CurrentTierPressure = wheel.MaxTierPressure;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw new ArgumentException();
+            }
+        }
 
         public enum eMaxTierAirPressure
         {

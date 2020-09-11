@@ -27,6 +27,27 @@ namespace Ex03.GarageLogic
 
             return isLicenseNumberExists;
         }
-        
+
+        public static string GetFullVehicleDetails(string i_LicenseNumber)
+        {
+            string allVehicleDetails = string.Empty;
+            if (CheckIfVehicleExistsInGarage(i_LicenseNumber))
+            {
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == i_LicenseNumber)
+                    {
+                        
+                        allVehicleDetails = vehicle.ToString();
+                        break;
+                    }
+                }
+
+                
+            }
+            return allVehicleDetails;
+        }
+
+   
     }
 }
