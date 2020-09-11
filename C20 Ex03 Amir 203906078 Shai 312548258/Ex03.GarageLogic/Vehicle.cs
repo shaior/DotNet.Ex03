@@ -97,7 +97,7 @@ namespace Ex03.GarageLogic
             return vehicleType;
         }
 
-        public string GetVehicleDeatils()
+        public override string ToString()
         {
             string allVehicleDetails;
             allVehicleDetails = string.Format(
@@ -105,11 +105,9 @@ namespace Ex03.GarageLogic
             Vehicle model name: {1}
             Wheels information: {2}
             Power source energy left : {3}"
-            ,this.r_LicenseNumber, this.r_Model, this.m_Wheels[0].ToString(), this.PowerSource.CurrentPowerSourceAmount);
+            ,this.r_LicenseNumber, this.r_Model, this.m_Wheels.ToString(), this.PowerSource.CurrentPowerSourceAmount);
             return allVehicleDetails;
         }
         public abstract void AssignEnergySourceToVehicle();
-        public abstract string ToString();
-
     }
 }
