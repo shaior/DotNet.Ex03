@@ -30,21 +30,5 @@ namespace Ex03.GarageLogic
                 return m_MaxBatteryLife;
             }
         }
-
-        /// <summary>
-        /// charging the battery
-        /// </summary>
-        /// <param name="i_LicenseNumber">license number</param>
-        /// <param name="i_RechargeAmount">amount to recharge</param>
-        public static void RechargeVehicleBattery(string i_LicenseNumber , string i_RechargeAmount)
-        {
-            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
-            {
-                if (vehicle.PowerSource is Battery)
-                {
-                    (vehicle.PowerSource as Battery).CurrentPowerSourceAmount += float.Parse(i_RechargeAmount);
-                }
-            }
-        }
     }
 }

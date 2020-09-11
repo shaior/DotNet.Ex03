@@ -17,53 +17,42 @@ namespace Ex03.ConsoleUI
         /// </summary>
         public static void GarageMenu()
         {
-            Console.WriteLine("Welcome To A&S Garage Manager! ");
-              bool exit = false;
-            while (!exit)
+            string choice;
+            Console.WriteLine("Welcome To A&S Garage Manager! Type (1-7) to select from Below: " + Environment.NewLine);
+            Console.WriteLine(
+                "1.Create new vehicle and insert it to the garage." +Environment.NewLine + 
+                "2.Show vehicle list with their status." + Environment.NewLine +
+                "3.Change vehicle status in the garage."+Environment.NewLine +
+                "4.Fill all the vehicle to max by license number." + Environment.NewLine + 
+                "5.Refuel gas tank by license number." + Environment.NewLine +
+                "6.Charge car battery by license." + Environment.NewLine +
+                "7.Show full vehicle details by license number.");
+
+            choice = Console.ReadLine();
+            switch (choice)
             {
-                string choice;
-                Console.WriteLine("Type (1-8) to select from Below: " + Environment.NewLine);
-                Console.WriteLine(
-                    "1.Create new vehicle and insert it to the garage." + Environment.NewLine +
-                    "2.Show vehicle list with their status." + Environment.NewLine +
-                    "3.Change vehicle status in the garage." + Environment.NewLine +
-                    "4.Fill all the vehicle to max by license number." + Environment.NewLine +
-                    "5.Refuel gas tank by license number." + Environment.NewLine +
-                    "6.Charge car battery by license." + Environment.NewLine +
-                    "7.Show full vehicle details by license number."+Environment.NewLine+
-                    "8.Quit.");
-
-                choice = Console.ReadLine();
-                switch (choice)
-                {
-                    case "1":
-                        CreateNewVehicle();
-                        break;
-                    case "2":
-                        ShowAllGarageVehiclesLicenseNumber();
-                        break;
-                    case "3":
-                        ChangeVehicleStatus();
-                        break;
-                    case "4":
-                        FillWheelToMaxByLicenseNumber();
-                        break;
-                    case "5":
-                        RefuelGasTank();
-                        break;
-                    case "6":
-                        RechargeBattery();
-                        break;
-                    case "7":
-                        ShowFullVehicleDetailsByLicenseNumber();
-                        break;
-                    case "8":
-                        exit = true;
-                        break;
-                }
+                case "1":
+                    CreateNewVehicle();
+                    break;
+                case "2":
+                    showAllGarageVehiclesLicenseNumber();
+                    break;
+                case "3":
+                    ChangeVehicleStatus();
+                    break;
+                case "4":
+                    FillWheelToMaxByLicenseNumber();
+                    break;
+                case "5":
+                    RefuelGasTank();
+                    break;
+                case "6":
+                    ChargeBattery();
+                    break;
+                case "7":
+                    ShowFullVehicleDetailsByLicenseNumber();
+                    break;
             }
-
-         
         }
         /// <summary>
         /// changing vehicle status.
@@ -94,16 +83,16 @@ namespace Ex03.ConsoleUI
                     bool checkPlateNumber = true;
                     while (checkPlateNumber)
                     {
-                        
+                        //check if license number exists in garage
                         Console.WriteLine("Please enter license plate number");
                         string licensePlateNumberInput = Console.ReadLine();
 
-                        checkPlateNumber = Garage.CheckIfVehicleExistsInGarage(licensePlateNumberInput);
-                        
+                        checkPlateNumber = GarageLogic.Garage.CheckIfVehicleExistsInGarage(licensePlateNumberInput);
+                        //checkPlateNumber = UserInputValidation.LicensePlateValidation(licensePlateNumber);
                         if (checkPlateNumber)
                         {
                             Console.WriteLine("This Vehicle already exists in the garage. starting treatment...");
-                            
+                            //GarageLogic.GarageInfo.VehiclesState.Add(licensePlateNumberInput,new );
                         }
                         else
                         {
@@ -111,6 +100,7 @@ namespace Ex03.ConsoleUI
                             string vehicleModelName = string.Format("Pleae enter your {0}'s Model: ",vehicleTypePick);
                             Console.WriteLine(vehicleModelName); 
                             string modelNameInput = Console.ReadLine();
+                            
                             string vehiclePowerSupply = string.Format("Please enter your {0}'s Power Supply. 1.Fuel 2.Battery :  ",vehicleTypePick);
                             Console.WriteLine(vehiclePowerSupply);
                             string vehiclePowerSupplyInput = Console.ReadLine();
@@ -153,7 +143,7 @@ namespace Ex03.ConsoleUI
         /// <summary>
         /// showing all vehicles in the garage.
         /// </summary>
-        public static void ShowAllGarageVehiclesLicenseNumber()
+        public static void showAllGarageVehiclesLicenseNumber()
         {
             Console.WriteLine("Choose Vehicle state to filter: 1.Currently Repairing 2.Repaired 3.Paid Up");
             string choice = Console.ReadLine();
@@ -176,9 +166,20 @@ namespace Ex03.ConsoleUI
             string vehicleLicenseNumber = Console.ReadLine();
             string allVehicleDetails = string.Empty;
 
-            allVehicleDetails = Garage.GetFullVehicleDetails(vehicleLicenseNumber);
+            if (Garage.CheckIfVehicleExistsInGarage(vehicleLicenseNumber))
+            {
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == vehicleLicenseNumber)
+                    {
+                        //each vehicle overrides ToString method.
+                        allVehicleDetails = vehicle.ToString();
+                        break;
+                    }
+                }
 
-            Console.WriteLine(allVehicleDetails);
+                Console.WriteLine(allVehicleDetails);
+            }
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Ex03.ConsoleUI
                 }
             }
 
-            
+            //AddAirPressureToWheels
         }
 
         /// <summary>
@@ -446,14 +447,20 @@ namespace Ex03.ConsoleUI
         /// <summary>
         /// charge battery.
         /// </summary>
-        public static void RechargeBattery()
+        public static void ChargeBattery()
         {
             Console.WriteLine("Please Provide License number to recharge car Battery: ");
             string licenseNumber = Console.ReadLine();
             Console.WriteLine("Please Provide amount of minutes to recharge: ");
             string rechargeAmount = Console.ReadLine();
 
-            Battery.RechargeVehicleBattery(licenseNumber,rechargeAmount);
+            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+            {
+                if (vehicle.PowerSource is Battery)
+                {
+                    (vehicle.PowerSource as Battery).CurrentPowerSourceAmount += float.Parse(rechargeAmount);
+                }
+            }
         }
 
         /// <summary>
@@ -495,11 +502,29 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please Provide License number to Refuel car: ");
             string licenseNumber = Console.ReadLine();
             Console.WriteLine("Please Provide Fuel amount to refuel: ");
-            string fuelAmount = Console.ReadLine();
+            string fuleAmount = Console.ReadLine();
             Console.WriteLine(string.Format("Please provide fuel type: 1.Octan98 2.Octan96 3.Octan95 4.Soler"));
             string fuelType = Console.ReadLine();
-         
-            Fuel.Refule(licenseNumber, fuelType,fuelAmount);
+            Fuel.eFuelType type = (Fuel.eFuelType)int.Parse(fuelType);
+
+            foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+            {
+                if (vehicle.PowerSource is Fuel)
+                {
+                    if (vehicle.LicenseNumber == licenseNumber)
+                    {
+                        if ((vehicle.PowerSource as Fuel).FuelType == type)
+                        {
+                            vehicle.PowerSource.CurrentPowerSourceAmount += float.Parse(fuleAmount);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+               
+            }
         }
 
         /// <summary>
@@ -508,11 +533,27 @@ namespace Ex03.ConsoleUI
         public static void FillWheelToMaxByLicenseNumber()
         {
             
+            try
+            {
                 Console.WriteLine("Please Provide License number to inflate wheels to maximum: ");
                 string licenseNumber = Console.ReadLine();
 
-                Wheel.InflateWheelsToMax(licenseNumber);
-
+                foreach (Vehicle vehicle in Vehicle.r_VehiclesList)
+                {
+                    if (vehicle.LicenseNumber == licenseNumber)
+                    {
+                        foreach (Wheel wheel in vehicle.Wheels)
+                        {
+                            wheel.CurrentTierPressure = wheel.MaxTierPressure;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw new ArgumentException();
+            }
+          
         }
 
         public static void Main()
